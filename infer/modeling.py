@@ -66,6 +66,10 @@ class TransformerEncoder(nn.Sequential):
         dynamic_axes['token_embeddings'] = {0: 'batch_size', 1: 'max_seq_len'}
         return dynamic_axes
 
+    def save(self, save_path):
+        self._tokenizer.save_pretrained(save_path)
+        self._base_config.save_pretrained(save_path)
+
     def get_dummy_inputs(self, text='', batch_size=1, seq_length=128, device='cpu', return_tensors="pt"):
         text = text if text else (" ".join([self._tokenizer.unk_token]) * seq_length)
         dummy_input = [text] * batch_size
@@ -160,13 +164,15 @@ def validate_onnx_model(model, onnx_path, device='cpu', print_model=False, rtol=
     print("Exported model has been tested with ONNXRuntime, and the result looks good!")
 
 
-def onnx_export(model_name_or_path, export_path, onnx_name='model.onnx', device='cpu', validate=True):
+def onnx_export(model_name_or_path, export_path, onnx_name='model.onnx', config_name='onnx_config.json', device='cpu', validate=True, save_pretrained=True):
     onnx_path = os.path.join(export_path, onnx_name)
-    config_path = os.path.join(export_path, 'config.json')
+    config_path = os.path.join(export_path, config_name)
     if not os.path.isdir(export_path):
         os.makedirs(export_path)
     # load transformer model
     model = TransformerEncoder(model_name_or_path)
+    if save_pretrained:
+        model.save(export_path)
     # export model via onnx
     with torch.no_grad():
         model.eval()
