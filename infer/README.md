@@ -8,6 +8,8 @@
 2. 模型初始化参数等信息配置文件 `onnx_config.json`
 3. tokenizer 相关的词表以及配置等，比如 `vocab.txt`, `tokenizer_config.json`
 
+附：[导出文件样例](http://172.31.0.197:8081/export.tar.gz)
+
 ## 二、推理测试
 
 脚本 `infer.py` 封装了在线推理计算逻辑（含预处理、模型预测以及后处理等），载入刚刚导出的模型进行测试：`python infer.py export/onnx_config.json`
