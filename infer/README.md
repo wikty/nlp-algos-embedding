@@ -13,3 +13,11 @@
 ## 二、推理测试
 
 脚本 `infer.py` 封装了在线推理计算逻辑（含预处理、模型预测以及后处理等），载入刚刚导出的模型进行测试：`python infer.py export/onnx_config.json`
+
+## 三、压力测试
+
+对比原生 Pytorch 和导出 ONNX 模型之间的性能差异，比如延迟、吞吐量等指标：
+
+```
+python bench.py --onnx-config export/onnx_config.json
+```
