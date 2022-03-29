@@ -164,7 +164,7 @@ def validate_onnx_model(model, onnx_path, device='cpu', print_model=False, rtol=
     print("Exported model has been tested with ONNXRuntime, and the result looks good!")
 
 
-def onnx_export(model_name_or_path, export_path, onnx_name='model.onnx', config_name='onnx_config.json', device='cpu', validate=True, save_pretrained=True):
+def onnx_export(model_name_or_path, export_path, onnx_name='model.onnx', config_name='onnx_config.json', device='cpu', validate=True, save_pretrained=True, dummy_text='hello world!'):
     onnx_path = os.path.join(export_path, onnx_name)
     config_path = os.path.join(export_path, config_name)
     if not os.path.isdir(export_path):
@@ -177,7 +177,7 @@ def onnx_export(model_name_or_path, export_path, onnx_name='model.onnx', config_
     with torch.no_grad():
         model.eval()
         model = model.to(device)
-        model_inputs = model.get_dummy_inputs(device=device, text='hello world!')
+        model_inputs = model.get_dummy_inputs(device=device, text=dummy_text)
         #args = []
         #for name in model.input_names:
         #    args.append(model_inputs[name])
@@ -203,6 +203,7 @@ def onnx_export(model_name_or_path, export_path, onnx_name='model.onnx', config_
         validate_onnx_model(model, onnx_path, print_model=True, device=device)
     # dump config
     config = {}
+    config['export_path'] = export_path
     config['onnx_path'] = onnx_path
     config['model_name_or_path'] = model_name_or_path
     config['do_lower_case'] = model.do_lower_case

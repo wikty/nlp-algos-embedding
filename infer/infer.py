@@ -1,3 +1,4 @@
+import os
 import sys
 import json
 import time
@@ -77,20 +78,15 @@ class Inference(object):
 
 class TextEncoderInference(Inference):
     
-    def __init__(self, onnx_path, model_name_or_path, device=None, logger=None, max_len=256, do_lower_case=False):
-        tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+    def __init__(self, onnx_path, device=None, logger=None, max_len=256, do_lower_case=False):
+        tokenizer = AutoTokenizer.from_pretrained(os.path.dirname(onnx_path))
         onnx_inputs = tokenizer.model_input_names
         onnx_outputs = ['sentence_embedding']
         super(TextEncoderInference, self).__init__(onnx_path, onnx_inputs, onnx_outputs, device=device, logger=logger)
-        self._base_model = model_name_or_path
         self._tokenizer = tokenizer
         self._max_len = max_len
         self._do_lower_case = do_lower_case
         self._logger = logger
-
-    @property
-    def base_model(self):
-        return self._base_model
 
     @property
     def tokenizer(self):
@@ -102,7 +98,7 @@ class TextEncoderInference(Inference):
             cfg = json.load(fin)
         max_len = 256 if 'max_seq_len' not in cfg else cfg['max_seq_len']
         do_lower_case = False if 'do_lower_case' not in cfg else cfg['do_lower_case']
-        return cls(cfg['onnx_path'], cfg['model_name_or_path'], max_len=max_len, do_lower_case=do_lower_case, **kwargs)
+        return cls(cfg['onnx_path'], max_len=max_len, do_lower_case=do_lower_case, **kwargs)
 
     def preprocess(self, texts):
         if isinstance(texts, str):
