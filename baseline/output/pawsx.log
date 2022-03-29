@@ -1,0 +1,56 @@
+nohup: ignoring input
+Some weights of the model checkpoint at bert-base-chinese were not used when initializing BertModel: ['cls.seq_relationship.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.transform.dense.weight', 'cls.predictions.decoder.weight', 'cls.predictions.bias', 'cls.predictions.transform.dense.bias']
+- This IS expected if you are initializing BertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+BERT-mean	0.04650776685418068
+Some weights of the model checkpoint at bert-base-chinese were not used when initializing BertModel: ['cls.predictions.bias', 'cls.predictions.decoder.weight', 'cls.predictions.transform.dense.weight', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+BERT-white	0.0777881939805373
+SimBERT-mean	0.04080639307046399
+(CTB):
+File: pawsx.fasttext.t1.txt
+Encoding: UTF-8
+-------------------------------
+Invoked on Mon Mar 14 18:06:50 CST 2022 with arguments: -sighanCorporaDict /data/xwb/tools/stanford-segmenter-2020-11-17/data -textFile pawsx.fasttext.t1.txt -inputEncoding UTF-8 -sighanPostProcessing true -keepAllWhitespaces false -loadClassifier /data/xwb/tools/stanford-segmenter-2020-11-17/data/ctb.gz -serDictionary /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict-chris6.ser.gz
+serDictionary=/data/xwb/tools/stanford-segmenter-2020-11-17/data/dict-chris6.ser.gz
+loadClassifier=/data/xwb/tools/stanford-segmenter-2020-11-17/data/ctb.gz
+sighanCorporaDict=/data/xwb/tools/stanford-segmenter-2020-11-17/data
+inputEncoding=UTF-8
+textFile=pawsx.fasttext.t1.txt
+sighanPostProcessing=true
+keepAllWhitespaces=false
+Loading classifier from /data/xwb/tools/stanford-segmenter-2020-11-17/data/ctb.gz ... done [17.5 sec].
+Loading Chinese dictionaries from 1 file:
+  /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict-chris6.ser.gz
+Done. Unique words in ChineseDictionary is: 423200.
+Loading character dictionary file from /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict/character_list [done].
+Loading affix dictionary from /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict/in.ctb [done].
+CRFClassifier tagged 79974 words in 2000 documents at 8895.88 words per second.
+(CTB):
+File: pawsx.fasttext.t2.txt
+Encoding: UTF-8
+-------------------------------
+Invoked on Mon Mar 14 18:07:18 CST 2022 with arguments: -sighanCorporaDict /data/xwb/tools/stanford-segmenter-2020-11-17/data -textFile pawsx.fasttext.t2.txt -inputEncoding UTF-8 -sighanPostProcessing true -keepAllWhitespaces false -loadClassifier /data/xwb/tools/stanford-segmenter-2020-11-17/data/ctb.gz -serDictionary /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict-chris6.ser.gz
+serDictionary=/data/xwb/tools/stanford-segmenter-2020-11-17/data/dict-chris6.ser.gz
+loadClassifier=/data/xwb/tools/stanford-segmenter-2020-11-17/data/ctb.gz
+sighanCorporaDict=/data/xwb/tools/stanford-segmenter-2020-11-17/data
+inputEncoding=UTF-8
+textFile=pawsx.fasttext.t2.txt
+sighanPostProcessing=true
+keepAllWhitespaces=false
+Loading classifier from /data/xwb/tools/stanford-segmenter-2020-11-17/data/ctb.gz ... done [18.4 sec].
+Loading Chinese dictionaries from 1 file:
+  /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict-chris6.ser.gz
+Done. Unique words in ChineseDictionary is: 423200.
+Loading character dictionary file from /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict/character_list [done].
+Loading affix dictionary from /data/xwb/tools/stanford-segmenter-2020-11-17/data/dict/in.ctb [done].
+CRFClassifier tagged 79639 words in 2000 documents at 8306.11 words per second.
+fastText_Chinese-STS-B Dev spearman: 
+SpearmanrResult(correlation=0.06551827403834652, pvalue=0.003374549342901978)
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.936 seconds.
+Prefix dict has been built successfully.
+Tencent_Chinese-STS-B Dev spearman: 
+SpearmanrResult(correlation=0.03641937066587261, pvalue=0.10347280430788387)
