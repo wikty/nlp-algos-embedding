@@ -27,5 +27,5 @@ python infer.py export/onnx_config.json
 对比原生 Pytorch 和导出 ONNX 模型之间的性能差异，比如延迟、吞吐量等指标：
 
 ```
-python bench.py --model-name bert-base-chinese --onnx-config export/onnx_config.json
+python bench.py --model-name bert-base-chinese --onnx-path export
 ```
