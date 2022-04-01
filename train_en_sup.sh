@@ -115,6 +115,6 @@ python train.py --exp-name $exp_name --task-type ${task_type} --loss-type ${loss
 EOF
 
 # Evaluation
-python eval.py --eval-mode sts --eval-list sts_test#${dataset_dir}/sts_benchmark/test.tsv \
+python src/eval.py --eval-mode sts --eval-list sts_test#${dataset_dir}/sts_benchmark/test.tsv \
     --model-list sts#output/training_sts_benchmark-sts,sts_v2#output/training_sts_benchmark-sts-circle,allnli#output/training_allnli-nli,allnli_v2#output/training_allnli_ranking-nli_ranking,allnli_v3#output/training_allnli-nli-circle,sts_allnli#output/training_sts_benchmark_nli-sts,sts_allnli_v2#output/training_sts_benchmark_nli_ranking-sts_default,sts_allnli_v3#output/training_sts_benchmark_nli_circle-sts-circle,mpnet#all-mpnet-base-v2 \
     > logs/eval.log-en_sup.log 2>&1
