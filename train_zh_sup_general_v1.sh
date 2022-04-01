@@ -1,8 +1,11 @@
-mkdir ./logs
-mkdir ./output
-dataset_dir=../../datasets/processed
+###############
+# 中文表示学习
+# - 各个任务监督学习
+###############
+mkdir -p ./logs
+mkdir -p ./output
+dataset_dir=../datasets/processed
 
-# 各个任务监督学习
 exp_name=csts_benchmark
 task_type=sts
 loss_type=default
@@ -172,11 +175,7 @@ python src/train.py --exp-name $exp_name --task-type ${task_type} --loss-type ${
     > logs/train.log-${exp_name}-${task_type}-${loss_type} 2>&1
 
 # Eval 各任务之间zero-shot能力
-benchmarks_list=csts_test#${dataset_dir}/Chinese-STS-B/test.tsv,ocnli_dev#${dataset_dir}/ocnli_public/dev.tsv,afqmc_dev#${dataset_dir}/afqmc_public/dev.tsv,lcqmc_dev#${dataset_dir}/lcqmc/dev.tsv,bqcorpus_dev#${dataset_dir}/bq_corpus/dev.tsv,pawsx_dev#${dataset_dir}/paws-x-zh/dev.tsv,xiaobu_dev#${dataset_dir}/oppo-xiaobu/dev.tsv,cmnli_dev#${dataset_dir}/cmnli_public/dev.tsv,csnli_dev#${dataset_dir}/csnli_public/dev.tsv
+model_list=csts#output/training-csts_benchmark-sts_default,ocnli#output/training-ocnli-nli-default,ocnli_rank#output/training-ocnli_rank-nli-ranking,cmnli#output/training-cmnli-nli-default,cmnli_rank#output/training-cmnli_rank-nli-ranking,csnli#output/training-csnli-nli-default,csnli_rank#output/training-csnli_rank-nli-ranking,pku#output/training-pkuparaph-qmc-ranking,afqmc#output/training-afqmc-qmc-default,lcqmc#output/training-lcqmc-qmc-default,bqcorpus#output/training-bqcorpus-qmc-default,pawsx#output/training-pawsx-qmc-default,xiaobu#output/training-xiaobu-qmc-default,qbqtc#output/training-qbqtc-qmc-default
+eval_list=csts_test#${dataset_dir}/Chinese-STS-B/test.tsv,ocnli_dev#${dataset_dir}/ocnli_public/dev.tsv,afqmc_dev#${dataset_dir}/afqmc_public/dev.tsv,lcqmc_dev#${dataset_dir}/lcqmc/dev.tsv,bqcorpus_dev#${dataset_dir}/bq_corpus/dev.tsv,pawsx_dev#${dataset_dir}/paws-x-zh/dev.tsv,xiaobu_dev#${dataset_dir}/oppo-xiaobu/dev.tsv,cmnli_dev#${dataset_dir}/cmnli_public/dev.tsv,csnli_dev#${dataset_dir}/csnli_public/dev.tsv
 
-python src/eval.py \
-    --model-list afqmc#output/training_afqmc-qmc/2022-02-11_17-27-23,bqcorpus#output/training_bqcorpus-qmc/2022-02-18_18-21-48,csts#output/training_csts_benchmark-sts/2022-02-11_16-59-00,lcqmc#output/training_lcqmc-qmc/2022-02-11_17-39-53,ocnli#output/training_ocnli-nli/2022-02-11_17-22-46,pawsx#output/training_pawsx-qmc/2022-02-11_18-42-43,xiaobu#output/training_xiaobu-qmc/2022-02-11_19-06-53,simcse#output/training_simcse_zh-unsupervised/2022-02-11_19-47-42,afqmc_distill#output/training_afqmc_distill_zh/2022-02-18_00-00-17,cmnli#output/training_cmnli-nli/2022-02-25_10-45-34,cmnli_rank#output/training_cmnli_rank-nli/2022-02-25_14-17-42,csnli#output/training_csnli-nli/2022-02-25_15-44-18,csnli_rank#output/training_csnli_rank-nli/2022-02-25_18-59-21,ocnli_rank#output/training_ocnli_rank-nli/2022-02-25_10-41-11,pkuparaph#output/training_pkuparaph-qmc/2022-02-28_10-09-13,qbqtc#output/training_qbqtc-qmc/2022-03-01_10-18-57 \
-    --eval-list ${benchmarks_list} \
-    --output-dir output/eval \
-    > logs/eval/zh_sbert.log 2>&1
-EOF
+python src/eval.py --model-list ${model_list} --eval-list ${eval_list} > logs/eval.log-zh_sup_general_v1 2>&1
