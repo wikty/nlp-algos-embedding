@@ -97,7 +97,7 @@ assert len(train_dataloaders) == len(train_losses), "Multi-task learning must wi
 if args.dev_file:
     # We add an evaluator, which evaluates the performance during training
     dev_samples, evaluator = create_evaluator('{}-dev'.format(exp_name), args.dev_file, 
-        task_type=args.eval_type, batch_size=args.eval_batch_size, model=train_losses[0]) # model is encoder+loss
+        task_type=args.dev_type, batch_size=args.eval_batch_size, model=train_losses[0]) # model is encoder+loss
 else:
     dev_samples, evaluator = [], None
 logger.info("Dev dataset size: {}".format(len(dev_samples)))
