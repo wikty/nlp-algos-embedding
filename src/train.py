@@ -28,7 +28,7 @@ parser.add_argument("--params-file", help="The training and losses custom hyper-
 parser.add_argument("--train-file", required=True, help="Train Dataset file.")
 parser.add_argument("--dev-file", required=True, help="Eval/dev Dataset file, it is a like-sts data.")
 parser.add_argument("--test-file", default="", help="Test Dataset file, it is a like-sts data.")
-parser.add_argument("--eval-type", default="sts", choices=["sts", "qmc", "nli"], help="The eval data type.")
+parser.add_argument("--dev-type", default="sts", choices=["sts", "qmc", "nli"], help="The eval data type.")
 parser.add_argument("--test-type", default="sts", choices=["sts", "qmc", "nli"], help="The test data type.")
 parser.add_argument("--model", default="bert-base-uncased", help="The BERT model name or path.")
 parser.add_argument("--is-pretrained-model", type=int, default=0, choices=[0,1], help="If the model is a sbert pretrained.")
