@@ -10,6 +10,7 @@ from sentence_transformers.readers import InputExample
 from transformers.optimization import AdamW
 
 from config import TaskConfig
+from trainer import Trainer
 from modeling import create_encoder, create_evaluator
 
 
@@ -28,7 +29,7 @@ parser.add_argument("--params-file", help="The training and losses custom hyper-
 parser.add_argument("--train-file", required=True, help="Train Dataset file.")
 parser.add_argument("--dev-file", required=True, help="Eval/dev Dataset file, it is a like-sts data.")
 parser.add_argument("--test-file", default="", help="Test Dataset file, it is a like-sts data.")
-parser.add_argument("--dev-type", default="sts", choices=["sts", "qmc", "nli"], help="The eval data type.")
+parser.add_argument("--dev-type", default="sts", choices=["sts", "qmc", "nli"], help="The dev/eval data type.")
 parser.add_argument("--test-type", default="sts", choices=["sts", "qmc", "nli"], help="The test data type.")
 parser.add_argument("--model", default="bert-base-uncased", help="The BERT model name or path.")
 parser.add_argument("--is-pretrained-model", type=int, default=0, choices=[0,1], help="If the model is a sbert pretrained.")
@@ -108,15 +109,27 @@ total_steps = min([len(dl) for dl in train_dataloaders]) * num_epochs
 eval_steps = int(total_steps * args.eval_rate)  # evalulate in each eval_steps
 warmup_steps = int(total_steps * args.warmup_rate) #10% of train data for warm-up
 # We can pass more than one tuple in order to perform multi-task learning on several datasets with different loss functions.
-model.fit(train_objectives=list(zip(train_dataloaders, train_losses)),
-          evaluator=evaluator,
-          epochs=num_epochs,
-          warmup_steps=warmup_steps,
-          evaluation_steps=eval_steps,
-          #optimizer_class=AdamW,
-          #optimizer_params={'correct_bias': False, 'eps': 1e-06, 'lr': args.learning_rate},
-          optimizer_params = {'lr': args.learning_rate},
-          output_path=model_save_path)
+# 1. training by sentence-transformers
+#model.fit(train_objectives=list(zip(train_dataloaders, train_losses)),
+#          evaluator=evaluator,
+#          epochs=num_epochs,
+#          warmup_steps=warmup_steps,
+#          evaluation_steps=eval_steps,
+#          #optimizer_class=AdamW,
+#          #optimizer_params={'correct_bias': False, 'eps': 1e-06, 'lr': args.learning_rate},
+#          optimizer_params = {'lr': args.learning_rate},
+#          output_path=model_save_path)
+# 2. training by trainer
+trainer = Trainer(model,
+    train_objectives=list(zip(train_dataloaders, train_losses)),
+    evaluator=evaluator,
+    #scheduler='WarmupLinear',
+    warmup_steps=warmup_steps,
+    optimizer_params = {'lr': args.learning_rate},
+    device=args.device,
+    logger=logger
+)
+trainer.train(epochs=num_epochs, evaluation_steps=eval_steps, output_path=model_save_path)
 
 # Evaluate model
 if args.test_file:
