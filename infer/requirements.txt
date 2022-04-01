@@ -5,3 +5,4 @@ onnx==1.10.2
 transformers==4.16.0
 sentence-transformers==2.1.0
 flask==2.0.3
+requests==2.27.1
