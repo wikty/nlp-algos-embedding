@@ -1,0 +1,60 @@
+experiment: sts-b
+version: v2
+working_dir: ~/embeddings/src
+input_dir: ~/embeddings/datasets/processed
+output_dir: ~/embeddings/output
+python: /opt/anaconda3/envs/pytorch-1.10.1/bin/python
+
+train:
+  task_type: sts
+  loss_type: default
+  train_file: sts_benchmark/train.tsv
+  dev_file: sts_benchmark/dev.tsv
+  test_file: sts_benchmark/test.tsv
+  model: bert-base-uncased
+  max_seq_len: 256
+  device: "cuda:0"
+  num_epochs: 4
+  train_batch_size: 128
+  eval_batch_size: 32
+  learning_rate: 2e-05
+
+train-eval:
+  eval_list:
+    -
+      name: sts_test
+      path: sts_benchmark/test.tsv
+
+train-bench:
+  input_file: sts_benchmark/dev.corpus.wiki
+  batch_size: 1
+  device: cpu
+  max_seq_len: 256
+
+distill:
+  train_file: sts_benchmark/train.corpus.wiki
+  dev_file: sts_benchmark/dev.corpus.wiki
+  test_file: sts_benchmark/test.tsv
+  student_model: none
+  student_keep_layers: 1,4,7,10
+  max_seq_len: 256
+  device: "cuda:0"
+  num_epochs: 1
+  train_batch_size: 256
+  eval_batch_size: 32
+  learning_rate: 1e-4
+
+distill-eval:
+  eval_list:
+    -
+      name: sts_test
+      path: sts_benchmark/test.tsv
+
+distill-bench:
+  input_file: sts_benchmark/dev.corpus.wiki
+  batch_size: 1
+  device: cpu
+  max_seq_len: 256
+
+export:
+  model_name: distill
